@@ -1,5 +1,5 @@
 streamlit 
 pandas
-streamlit-aggrid 0.2.3
+st_aggrid 0.2.3
 plotly.express
 
