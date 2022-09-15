@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-from st_aggrid import AgGrid
+# from st_aggrid import AgGrid
 import plotly.express as px
 
 
@@ -8,12 +8,12 @@ st.header('Потери техники в Украино-российской в
 st.subheader('Данные собраны исследовательской группой Oryx на основании анализа фотографий с полей боя')
 st.caption("Сбор данных осуществлялся с 24.02.2022 по 04.09.2022")
 
-losses_russia = pd.read_csv('losses_russia.csv')
-losses_ukraine = pd.read_csv('losses_ukraine.csv')
+losses_russia_row = pd.read_csv('losses_russia.csv')
+losses_ukraine_row = pd.read_csv('losses_ukraine.csv')
 
 # Подготовка данных
-losses_russia = losses_russia.fillna(0)
-losses_ukraine = losses_ukraine.fillna(0)
+losses_russia = losses_russia_row.fillna(0)
+losses_ukraine = losses_ukraine_row.fillna(0)
 losses_russia['manufacturer'] = losses_russia['manufacturer'].str.replace('the ', '')
 losses_ukraine['manufacturer'] = losses_ukraine['manufacturer'].str.replace('the ', '')
 losses_ukraine['manufacturer'] = losses_ukraine['manufacturer'].str.replace('%281794%E2%80%931815%2C 1830%E2%80%931974%2C 2020%E2%80%93present%29', '')
@@ -138,6 +138,6 @@ with tab3:
 
 with tab4:
     st.subheader('Потери россии ')
-    AgGrid(losses_russia)
+    st.table(losses_russia_row)
     st.subheader('Потери Украины')
-    AgGrid(losses_ukraine)
+    st.table(losses_ukraine_row)
