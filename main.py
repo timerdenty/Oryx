@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 from st_aggrid import AgGrid
 import plotly.express as px
-import plotly.graph_objects as go
+
 
 st.header('Потери техники в Украино-российской войне')
 st.subheader('Данные собраны исследовательской группой Oryx на основании анализа фотографий с полей боя')
