@@ -119,15 +119,92 @@ with tab2:
 
 
 with tab3:
+    # losses_russia_by_category = losses_russia[['equipment', 'losses_total']]
+    # losses_russia_by_category = losses_russia_by_category.groupby('equipment')['losses_total'].sum()
+    # losses_russia_by_category = pd.DataFrame(losses_russia_by_category)
+    # losses_russia_by_category = losses_russia_by_category.reset_index(['equipment'])
+    #
+    # losses_ukraine_by_category = losses_ukraine[['equipment', 'losses_total']]
+    # losses_ukraine_by_category = losses_ukraine_by_category.groupby(['equipment'])['losses_total'].sum()
+    # losses_ukraine_by_category = pd.DataFrame(losses_ukraine_by_category)
+    # losses_ukraine_by_category = losses_ukraine_by_category.reset_index(['equipment'])
     losses_russia_by_category = losses_russia[['equipment', 'losses_total']]
-    losses_russia_by_category = losses_russia_by_category.groupby('equipment')['losses_total'].sum()
-    losses_russia_by_category = pd.DataFrame(losses_russia_by_category)
-    losses_russia_by_category = losses_russia_by_category.reset_index(['equipment'])
+    losses_russia_by_category = losses_russia_by_category.groupby(['equipment', ], as_index=False)[
+        ['losses_total']].sum()
+    losses_russia_by_category["country"] = 'Russia'
+    rus_hight_lost = losses_russia_by_category.loc[losses_russia_by_category['equipment'].isin(['Tanks',
+                                                                                                'Trucks, Vehicles and Jeeps',
+                                                                                                'Armoured Fighting Vehicles',
+                                                                                                'Infantry Fighting Vehicles',
+                                                                                                ])]
+
+    rus_low_lost = losses_russia_by_category.loc[losses_russia_by_category['equipment'].isin(['Aircraft',
+                                                                                              'Anti-Aircraft Guns',
+                                                                                              'Armoured Personnel Carriers',
+                                                                                              'Artillery Support Vehicles And Equipment',
+                                                                                              'Engineering Vehicles And Equipment',
+                                                                                              'Helicopters',
+                                                                                              'Infantry Mobility Vehicles',
+                                                                                              'Multiple Rocket Launchers',
+                                                                                              'Naval Ships',
+                                                                                              ])]
 
     losses_ukraine_by_category = losses_ukraine[['equipment', 'losses_total']]
-    losses_ukraine_by_category = losses_ukraine_by_category.groupby(['equipment'])['losses_total'].sum()
-    losses_ukraine_by_category = pd.DataFrame(losses_ukraine_by_category)
-    losses_ukraine_by_category = losses_ukraine_by_category.reset_index(['equipment'])
+    losses_ukraine_by_category = losses_ukraine_by_category.groupby(['equipment', ], as_index=False)[
+        ['losses_total']].sum()
+    losses_ukraine_by_category["country"] = "Ukraine"
+    ukr_hight_lost = losses_ukraine_by_category.loc[losses_ukraine_by_category['equipment'].isin(['Tanks',
+                                                                                                  'Trucks, Vehicles and Jeeps',
+                                                                                                  'Armoured Fighting Vehicles',
+                                                                                                  'Infantry Fighting Vehicles',
+                                                                                                  ])]
+
+    ukr_low_lost = losses_ukraine_by_category.loc[losses_ukraine_by_category['equipment'].isin(['Aircraft',
+                                                                                                'Anti-Aircraft Guns',
+                                                                                                'Armoured Personnel Carriers',
+                                                                                                'Artillery Support Vehicles And Equipment',
+                                                                                                'Engineering Vehicles And Equipment',
+                                                                                                'Helicopters',
+                                                                                                'Infantry Mobility Vehicles',
+                                                                                                'Multiple Rocket Launchers',
+                                                                                                'Naval Ships',
+                                                                                                ])]
+
+
+    full_dataset_by_category_hight_lost = pd.concat([rus_hight_lost, ukr_hight_lost])
+    full_dataset_by_category_low_lost = pd.concat([rus_low_lost, ukr_low_lost])
+
+    barchart_hight_lost = px.bar(
+        data_frame=full_dataset_by_category_hight_lost,
+        x="equipment",
+        y="losses_total",
+        color="country",  # differentiate color of marks
+        color_discrete_sequence=["grey", "#FFD700"],
+        opacity=0.9,  # set opacity of markers (from 0 to 1)
+        orientation="v",  # 'v','h': orientation of the marks
+        labels={"country": "Страна",
+                "equipment": "Вид техники",
+                "losses_total": "Потеряно (шт.)"},
+        title='Категории техники с большим количеством потерь',
+        barmode='group', )
+
+    barchart_low_lost = px.bar(
+        data_frame=full_dataset_by_category_low_lost,
+        x="equipment",
+        y="losses_total",
+        color="country",  # differentiate color of marks
+        color_discrete_sequence=["grey", "#FFD700"],
+        opacity=0.9,  # set opacity of markers (from 0 to 1)
+        orientation="v",  # 'v','h': orientation of the marks
+        labels={"country": "Страна",
+                "equipment": "Вид техники",
+                "losses_total": "Потеряно (шт.)"},
+        title="Категории техники с относительно небольшим количеством потерь",
+        barmode='group', )
+
+    st.write(barchart_hight_lost)
+
+    st.write(barchart_low_lost)
 
     col1, col2 = st.columns(2)
     col1.subheader('Потери россии по видам вооружений')
