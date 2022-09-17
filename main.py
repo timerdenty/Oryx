@@ -3,7 +3,7 @@ import streamlit as st
 # from st_aggrid import AgGrid
 import plotly.express as px
 
-
+st.set_page_config(page_title='Потери техники в Украино-российской войне',  layout = 'wide', initial_sidebar_state = 'auto')
 st.header('Потери техники в Украино-российской войне')
 st.subheader('Данные собраны исследовательской группой Oryx на основании анализа фотографий с полей боя')
 st.caption("Сбор данных осуществлялся с 24.02.2022 по 04.09.2022")
@@ -218,3 +218,6 @@ with tab4:
     st.table(losses_russia_row)
     st.subheader('Потери Украины')
     st.table(losses_ukraine_row)
+
+st.write("Разработчик приложения: [Дмитрий Мартуль](https://t.me/d_martul)")
+st.write("Источник данных: [Kaggle.com | Ukraine russia War-Equipment Losses-Data Overview](https://www.kaggle.com/code/piterfm/ukraine-russia-war-equipment-losses-data-overview/data)")
