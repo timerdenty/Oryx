@@ -27,9 +27,8 @@ tab1, tab2, tab3, tab4 = st.tabs(["📈 Общие данные", "Cтрана-�
 with tab1:
     sum_ukrain_losses = sum(losses_ukraine['losses_total'])
     sum_russia_losses = sum(losses_russia['losses_total'])
-    # , icon = '⚠️'
 
-    st.markdown('Соотношение потерь техники Росcия : Украина  с 24.02.22 - ' + str(round(sum_russia_losses / sum_ukrain_losses, 2)) + ' к 1**')
+    st.info('Соотношение потерь техники Росcия : Украина  с начала полномаштабного вторжения - - ' + str(round(sum_russia_losses / sum_ukrain_losses, 2)) + ' к 1', icon='⚠️')
 
     st.subheader('Потери Украины')
     col1, col2, col3 = st.columns(3)
