@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-from st_aggrid import AgGrid
+# from st_aggrid import AgGrid
 import plotly.express as px
 
 st.set_page_config(page_title='Потери техники в Украино-российской войне',  layout = 'wide', initial_sidebar_state = 'auto')
@@ -126,15 +126,6 @@ with tab2:
 
 
 with tab3:
-    # losses_russia_by_category = losses_russia[['equipment', 'losses_total']]
-    # losses_russia_by_category = losses_russia_by_category.groupby('equipment')['losses_total'].sum()
-    # losses_russia_by_category = pd.DataFrame(losses_russia_by_category)
-    # losses_russia_by_category = losses_russia_by_category.reset_index(['equipment'])
-    #
-    # losses_ukraine_by_category = losses_ukraine[['equipment', 'losses_total']]
-    # losses_ukraine_by_category = losses_ukraine_by_category.groupby(['equipment'])['losses_total'].sum()
-    # losses_ukraine_by_category = pd.DataFrame(losses_ukraine_by_category)
-    # losses_ukraine_by_category = losses_ukraine_by_category.reset_index(['equipment'])
     losses_russia_by_category = losses_russia[['equipment', 'losses_total']]
     losses_russia_by_category = losses_russia_by_category.groupby(['equipment', ], as_index=False)[
         ['losses_total']].sum()
