@@ -1,19 +1,22 @@
 import pandas as pd
 import streamlit as st
-# from st_aggrid import AgGrid
+from st_aggrid import AgGrid
 import plotly.express as px
 
 st.set_page_config(page_title='Потери техники в Украино-российской войне',  layout = 'wide', initial_sidebar_state = 'auto')
 st.header('Потери техники в Украино-российской войне')
 st.subheader('Данные собраны исследовательской группой Oryx на основании анализа фотографий с полей боя')
-st.caption("Сбор данных осуществлялся с 24.02.2022 по 04.09.2022")
+st.caption("Сбор данных осуществлялся с 24.02.2022 по 20.09.2022")
 
 losses_russia_row = pd.read_csv('losses_russia.csv')
 losses_ukraine_row = pd.read_csv('losses_ukraine.csv')
 
 # Подготовка данных
+losses_russia_row['sub_model'] = losses_russia_row['sub_model'].fillna("unknown")
 losses_russia = losses_russia_row.fillna(0)
+losses_ukraine_row['sub_model'] = losses_ukraine_row['sub_model'].fillna("unknown")
 losses_ukraine = losses_ukraine_row.fillna(0)
+
 losses_russia['manufacturer'] = losses_russia['manufacturer'].str.replace('the ', '')
 losses_ukraine['manufacturer'] = losses_ukraine['manufacturer'].str.replace('the ', '')
 losses_ukraine['manufacturer'] = losses_ukraine['manufacturer'].str.replace('%281794%E2%80%931815%2C 1830%E2%80%931974%2C 2020%E2%80%93present%29', '')
@@ -22,6 +25,10 @@ losses_ukraine['manufacturer'] = losses_ukraine['manufacturer'].str.replace('%28
 tab1, tab2, tab3, tab4 = st.tabs(["📈 Общие данные", "Cтрана-производитель", "Категории техники", "Исходные данные"])
 
 with tab1:
+    sum_ukrain_losses = sum(losses_ukraine['losses_total'])
+    sum_russia_losses = sum(losses_russia['losses_total'])
+
+    st.info('Соотношение потерь техники Росcия : Украина  - ' + str(round(sum_russia_losses / sum_ukrain_losses, 2)) + ' к 1', icon='⚠️')
 
     st.subheader('Потери Украины')
     col1, col2, col3 = st.columns(3)
@@ -215,9 +222,10 @@ with tab3:
 
 with tab4:
     st.subheader('Потери россии ')
-    st.table(losses_russia_row)
+    st.dataframe(losses_russia)
     st.subheader('Потери Украины')
-    st.table(losses_ukraine_row)
+    st.dataframe(losses_ukraine)
 
-st.write("Разработчик приложения: [Дмитрий Мартуль](https://t.me/d_martul)")
+
+st.write("Разработка: [Дмитрий Мартуль](https://t.me/d_martul)")
 st.write("Источник данных: [Kaggle.com | Ukraine russia War-Equipment Losses-Data Overview](https://www.kaggle.com/code/piterfm/ukraine-russia-war-equipment-losses-data-overview/data)")
