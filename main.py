@@ -28,7 +28,7 @@ with tab1:
     sum_ukrain_losses = sum(losses_ukraine['losses_total'])
     sum_russia_losses = sum(losses_russia['losses_total'])
 
-    st.info('Соотношение потерь техники Росcия : Украина  - ' + str(round(sum_russia_losses / sum_ukrain_losses, 2)) + ' к 1', icon='⚠️')
+    st.info('Соотношение потерь техники Росcия : Украина  с 24.02.22 - ' + str(round(sum_russia_losses / sum_ukrain_losses, 2)) + ' к 1', icon='⚠️')
 
     st.subheader('Потери Украины')
     col1, col2, col3 = st.columns(3)
