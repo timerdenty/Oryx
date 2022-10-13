@@ -4,9 +4,9 @@ import streamlit as st
 import plotly.express as px
 
 st.set_page_config(page_title='Потери техники в Украино-российской войне',  layout = 'wide', initial_sidebar_state = 'auto')
-st.header('Потери техники в Украино-российской войне')
+st.header('Потери техники в российско-украинской войне')
 st.subheader('Данные собраны исследовательской группой Oryx на основании анализа фотографий с полей боя')
-st.caption("Сбор данных осуществлялся с 24.02.2022 по 20.09.2022")
+st.caption("Сбор данных осуществлялся с 24.02.2022 по 09.10.2022")
 
 losses_russia_row = pd.read_csv('losses_russia.csv')
 losses_ukraine_row = pd.read_csv('losses_ukraine.csv')
